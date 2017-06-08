@@ -75,7 +75,7 @@ public class SnakeUtil {
         List<Snake> snakes = moveRequest.getSnakes();
 
         for (Snake snake : snakes) {
-            if (snake.getId() == moveRequest.getYou()) {
+            if (snake.getId().equals(moveRequest.getYou())) {
                 return snake.getCoords()[0];
             }
         }

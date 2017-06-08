@@ -65,7 +65,7 @@ public class RequestController {
       Move myMove = lastMove;
       if (!moves.contains(lastMove)) {
           myMove = moves.get(0);
-          lastMove = myMove; 
+          lastMove = myMove;
       }
 
     return new MoveResponse()
