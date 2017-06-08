@@ -40,11 +40,8 @@ public class RequestController {
   public StartResponse start(@RequestBody StartRequest request) {
     return new StartResponse()
       .setName("Rocket Snakes")
-      .setColor("#FF0000")
       .setColor("#3335FF")
       .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
-      .setHeadType(HeadType.DEAD)
-      .setTailType(TailType.PIXEL)
       .setHeadType(HeadType.SHADES)
       .setTailType(TailType.FRECKLED)
       .setTaunt("Boom!");
