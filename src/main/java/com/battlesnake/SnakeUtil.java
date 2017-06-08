@@ -33,9 +33,28 @@ public class SnakeUtil {
         }
 
         // check left
-        int leftX = x -1;
-        // if (int down
+        int leftX = x - 1;
+        if (leftX > 0 && board[leftX] [y]) {
+            moves.add(Move.LEFT);
+        }
 
+        // check right
+        int rightX = x + 1;
+        if (rightX < moveRequest.getWidth() && board[rightX] [y]) {
+            moves.add(Move.RIGHT);
+        }
+
+        // check down
+        int downY = y + 1;
+        if (downY < moveRequest.getHeight() && board[x] [downY]) {
+            moves.add(Move.DOWN);
+        }
+
+        // check up
+        int upY = y - 1;
+        if (upY > 0 && board[x] [downY]) {
+            moves.add(Move.UP);
+        }
 
         return moves;
     }
