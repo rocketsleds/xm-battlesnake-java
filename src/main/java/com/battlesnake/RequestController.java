@@ -33,39 +33,44 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RequestController {
 
-  @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
-  public StartResponse start(@RequestBody StartRequest request) {
-    return new StartResponse()
-      .setName("Bowser Snake")
-      .setColor("#FF0000")
-      .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
-      .setHeadType(HeadType.DEAD)
-      .setTailType(TailType.PIXEL)
-      .setTaunt("Roarrrrrrrrr!");
-  }
+    @RequestMapping(value = "/start", method = RequestMethod.POST, produces = "application/json")
+    public StartResponse start(@RequestBody StartRequest request) {
+        return new StartResponse()
+                .setName("Bowser Snake")
+                .setColor("#FF0000")
+                .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
+                .setHeadType(HeadType.DEAD)
+                .setTailType(TailType.PIXEL)
+                .setTaunt("Roarrrrrrrrr!");
+    }
 
-  @RequestMapping(value="/move", method=RequestMethod.POST, produces = "application/json")
-  public MoveResponse move(@RequestBody MoveRequest request) {
+    @RequestMapping(value = "/move", method = RequestMethod.POST, produces = "application/json")
+    public MoveResponse move(@RequestBody MoveRequest request) {
 
-    request.getDeadSnakes();
-    request.getFood();
-    request.getHeight();
-    request.getWidth();
-    request.getSnakes();
-    request.getTurn();
-    request.getYou();
-    request.getGameId();
+        request.getDeadSnakes();
+        request.getFood();
+        request.getHeight();
+        request.getWidth();
+        request.getSnakes();
+        request.getTurn();
+        request.getYou();
+        request.getGameId();
 
-    return new MoveResponse()
-      .setMove(Move.DOWN)
-      .setTaunt("Going Down!");
-  }
-    
-  @RequestMapping(value="/end", method=RequestMethod.POST)
-  public Object end() {
-      // No response required
-      Map<String, Object> responseObject = new HashMap<String, Object>();
-      return responseObject;
-  }
+        return new MoveResponse()
+                .setMove(Move.DOWN)
+                .setTaunt("Going Down!");
+    }
+
+    @RequestMapping(value = "/moveJim", method = RequestMethod.POST, produces = "application/json")
+    public MoveResponse moveJim(@RequestBody MoveRequest request) {
+        return new MoveResponse(SnakeUtil.getBestMove(request), "Weeeee");
+    }
+
+    @RequestMapping(value = "/end", method = RequestMethod.POST)
+    public Object end() {
+        // No response required
+        Map<String, Object> responseObject = new HashMap<String, Object>();
+        return responseObject;
+    }
 
 }
