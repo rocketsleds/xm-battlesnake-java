@@ -17,7 +17,6 @@
 package com.battlesnake;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.battlesnake.data.HeadType;
 import com.battlesnake.data.Move;
@@ -58,13 +57,14 @@ public class RequestController {
     request.getTurn();
     request.getYou();
     int [] head = SnakeUtil.getMyHead(request);
-    List<Move> moves = SnakeUtil.getAllowableMoves(head, request);
-      Move myMove = lastMove;
-      if (!moves.contains(lastMove)) {
-          myMove = moves.get(0);
-          lastMove = myMove; 
-      }
+//    List<Move> moves = SnakeUtil.getAllowableMoves(head, request);
+//      Move myMove = lastMove;
+//      if (!moves.contains(lastMove)) {
+//          myMove = moves.get(0);
+//          lastMove = myMove; 
+//      }
 
+    Move myMove = SnakeUtil.getMoveTowardsFood(request, SnakeUtil.getAllowableMoves(head, request));
     return new MoveResponse()
       .setMove(myMove)
       .setTaunt("Eat my dust!");

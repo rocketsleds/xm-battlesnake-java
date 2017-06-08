@@ -83,7 +83,7 @@ public class SnakeUtil {
     }
 
     //    public static Move getMoveTowardsFood(MoveRequest moveRequest,List<Move> disallowedMove) {
-    public static Move getMoveTowardsFood(MoveRequest moveRequest) {
+    public static Move getMoveTowardsFood(MoveRequest moveRequest, List<Move> allowableMoves) {
         int[][] food = moveRequest.getFood();
         int[] foodPellet = food[0];
 
@@ -92,18 +92,19 @@ public class SnakeUtil {
         int diffx = foodPellet[0] - me[0];
         int diffy = foodPellet[1] - me[1];
         if (Math.abs(diffx) >= Math.abs(diffy)) {
-            if (diffx >= 0) {
-                return Move.RIGHT;
-            } else {
+            if (diffx >= 0 && allowableMoves.contains(Move.RIGHT)) {
+               return Move.RIGHT;
+            } else if (allowableMoves.contains(Move.LEFT)){
                 return Move.LEFT;
             }
         } else {
-            if (diffy >= 0) {
+            if (diffy >= 0 && allowableMoves.contains(Move.DOWN)) {
                 return Move.DOWN;
-            } else {
+            } else if (allowableMoves.contains(Move.UP)) {
                 return Move.UP;
             }
         }
+        return allowableMoves.get(0);
     }
 
 }
