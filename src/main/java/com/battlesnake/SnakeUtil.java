@@ -60,4 +60,28 @@ public class SnakeUtil {
         }
         throw new RuntimeException("Invalid setup");
     }
+
+//    public static Move getMoveTowardsFood(MoveRequest moveRequest,List<Move> disallowedMove) {
+    public static Move getMoveTowardsFood(MoveRequest moveRequest) {
+        int[][] food = moveRequest.getFood();
+        int[] foodPellet = food[0];
+
+        int [] me = getMyHead(moveRequest);
+        
+        int diffx = foodPellet[0] - me[0];
+        int diffy = foodPellet[1] - me[1];
+        if (Math.abs(diffx) >= Math.abs(diffy)) {
+            if (diffx >= 0) {
+                return Move.RIGHT;
+            } else {
+                return Move.LEFT;
+            }
+        } else {
+            if (diffy >= 0) {
+                return Move.DOWN;
+            } else {
+                return Move.UP;
+            }
+        }
+    }
 }

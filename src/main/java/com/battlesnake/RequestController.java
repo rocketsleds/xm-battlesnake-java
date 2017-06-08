@@ -19,7 +19,6 @@ package com.battlesnake;
 import java.util.HashMap;
 import java.util.Map;
 import com.battlesnake.data.HeadType;
-import com.battlesnake.data.Move;
 import com.battlesnake.data.MoveRequest;
 import com.battlesnake.data.MoveResponse;
 import com.battlesnake.data.StartRequest;
@@ -57,7 +56,7 @@ public class RequestController {
     request.getGameId();
 
     return new MoveResponse()
-      .setMove(Move.DOWN)
+      .setMove(SnakeUtil.getMoveTowardsFood(request))
       .setTaunt("Going Down!");
   }
     
