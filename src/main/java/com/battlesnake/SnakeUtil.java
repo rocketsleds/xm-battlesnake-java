@@ -36,7 +36,7 @@ public class SnakeUtil {
 
         // check left
         int leftX = x - 1;
-        if (leftX > 0 && board[leftX] [y]) {
+        if (leftX >= 0 && board[leftX] [y]) {
             moves.add(Move.LEFT);
         }
 
@@ -54,7 +54,7 @@ public class SnakeUtil {
 
         // check up
         int upY = y - 1;
-        if (upY > 0 && board[x] [upY]) {
+        if (upY >= 0 && board[x] [upY]) {
             moves.add(Move.UP);
         }
 
