@@ -7,98 +7,78 @@ import com.battlesnake.data.MoveRequest;
 import com.battlesnake.data.Snake;
 
 public class SnakeUtil {
-    public static Move currentMove = Move.DOWN;
 
-    public static List<Move> getAllowableMoves(MoveRequest moveRequest) {
+    public static List<Move> getAllowableMoves(int[] position, MoveRequest moveRequest) {
         List<Move> moves = new ArrayList<Move>();
 
         // what's our current location ?
+        int x = position[0];
+        int y = position[1];
 
 
-        // make sure we don't hit the sides
-        // make sure we don't hit another snake
-        // moveRequest.get
+        // create board of allowable moves, all true
+        boolean [][] board = new boolean[moveRequest.getWidth()][moveRequest.getHeight()];
+        for (int i=0; i < moveRequest.getWidth(); i++) {
+            for (int j=0; j < moveRequest.getHeight(); j++) {
+                board[i][j] = true;
+            }
+        }
+
+        // update board for a snake
+        for (Snake snake : moveRequest.getSnakes()) {
+            updateAllowableBoard(board, snake);
+        }
+        if (moveRequest.getDeadSnakes() != null) {
+            for (Snake snake : moveRequest.getDeadSnakes()) {
+                updateAllowableBoard(board, snake);
+            }
+        }
+
+        // check left
+        int leftX = x - 1;
+        if (leftX > 0 && board[leftX] [y]) {
+            moves.add(Move.LEFT);
+        }
+
+        // check right
+        int rightX = x + 1;
+        if (rightX < moveRequest.getWidth() && board[rightX] [y]) {
+            moves.add(Move.RIGHT);
+        }
+
+        // check down
+        int downY = y + 1;
+        if (downY < moveRequest.getHeight() && board[x] [downY]) {
+            moves.add(Move.DOWN);
+        }
+
+        // check up
+        int upY = y - 1;
+        if (upY > 0 && board[x] [upY]) {
+            moves.add(Move.UP);
+        }
+
         return moves;
     }
 
-    public static Move getBestMove(MoveRequest moveRequest, Move currentDirection) {
-        Snake mySnake = getMySnake(moveRequest.getSnakes(), moveRequest.getYou());
+    public static void updateAllowableBoard(boolean[][] board, Snake snake) {
 
-        switch(currentDirection) {
-            case UP:
-                if (willCollideInWall(Move.UP, moveRequest.getWidth(), moveRequest.getHeight(), mySnake)) {
-                    return Move.LEFT;
-                }
-                break;
-
-            case DOWN:
-                if (willCollideInWall(Move.DOWN, moveRequest.getWidth(), moveRequest.getHeight(), mySnake)) {
-                    return Move.RIGHT;
-                }
-                break;
-
-            case LEFT:
-                if (willCollideInWall(Move.LEFT, moveRequest.getWidth(), moveRequest.getHeight(), mySnake)) {
-                    return Move.DOWN;
-                }
-                break;
-
-            case RIGHT:
-                if (willCollideInWall(Move.RIGHT, moveRequest.getWidth(), moveRequest.getHeight(), mySnake)) {
-                    return Move.UP;
-                }
-                break;
-
+        int[][] coords = snake.getCoords();
+        for (int i=0; i < coords.length; i++) {
+            int[] position = coords[i];
+            board[position[0]] [position[1]] = false;
         }
 
-        return currentMove;
     }
 
-    public static boolean willCollideInWall(Move direction, int width, int height, Snake mySnake) {
-        int left = 0;
-        int right = width - 1;
-        int top = 0;
-        int bottom = height - 1;
+    public static int[] getMyHead(MoveRequest moveRequest) {
+        List<Snake> snakes = moveRequest.getSnakes();
 
-        int[] head = getHead(mySnake);
-
-        switch(direction) {
-            case UP:
-                head = new int[]{head[0], head[1] - 1};
-                if (head[1] <= top) {
-                    return true;
-                }
-
-            case DOWN:
-                head = new int[]{head[0], head[1] + 1};
-                if (head[1] >= bottom) {
-                    return true;
-                }
-
-            case LEFT:
-                head = new int[]{head[0] - 1, head[1]};
-                if (head[0] <= left) {
-                    return true;
-                }
-
-            case RIGHT:
-                if (head[0] >= right) {
-                    return true;
-                }
-                break;
-
-            default:
-                throw new RuntimeException();
+        for (Snake snake : snakes) {
+            if (snake.getId() == moveRequest.getYou()) {
+                return snake.getCoords()[0];
+            }
         }
-
-        return false;
-    }
-
-    public static Snake getMySnake(List<Snake> snakes, String myName) {
-        return snakes.stream().filter(s -> s.getName().equalsIgnoreCase(myName)).findFirst().orElse(null);
-    }
-
-    public static int[] getHead(Snake snake) {
-        return snake.getCoords()[0];
+        throw new RuntimeException("Invalid setup");
     }
 }
