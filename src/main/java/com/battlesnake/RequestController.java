@@ -32,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RequestController {
-
+    boolean hasInit = false;
+    Move move = Move.DOWN;
     @RequestMapping(value = "/start", method = RequestMethod.POST, produces = "application/json")
     public StartResponse start(@RequestBody StartRequest request) {
         return new StartResponse()
@@ -44,26 +45,35 @@ public class RequestController {
                 .setTaunt("Roarrrrrrrrr!");
     }
 
+//    @RequestMapping(value = "/move", method = RequestMethod.POST, produces = "application/json")
+//    public MoveResponse move(@RequestBody MoveRequest request) {
+//
+//        request.getDeadSnakes();
+//        request.getFood();
+//        request.getHeight();
+//        request.getWidth();
+//        request.getSnakes();
+//        request.getTurn();
+//        request.getYou();
+//        request.getGameId();
+//
+//        return new MoveResponse()
+//                .setMove(Move.DOWN)
+//                .setTaunt("Going Down!");
+//    }
+
     @RequestMapping(value = "/move", method = RequestMethod.POST, produces = "application/json")
     public MoveResponse move(@RequestBody MoveRequest request) {
+        Move newMove;
+        if (!hasInit) {
+            move = SnakeUtil.getBestMove(request, Move.DOWN);
+            hasInit = true;
+        } else {
+            Move newNewMove = SnakeUtil.getBestMove(request, move);
+            move = newNewMove;
+        }
 
-        request.getDeadSnakes();
-        request.getFood();
-        request.getHeight();
-        request.getWidth();
-        request.getSnakes();
-        request.getTurn();
-        request.getYou();
-        request.getGameId();
-
-        return new MoveResponse()
-                .setMove(Move.DOWN)
-                .setTaunt("Going Down!");
-    }
-
-    @RequestMapping(value = "/moveJim", method = RequestMethod.POST, produces = "application/json")
-    public MoveResponse moveJim(@RequestBody MoveRequest request) {
-        return new MoveResponse(SnakeUtil.getBestMove(request), "Weeeee");
+        return new MoveResponse(move, "Weeeee");
     }
 
     @RequestMapping(value = "/end", method = RequestMethod.POST)

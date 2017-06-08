@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(JUnit4ClassRunner.class)
 public class SnakeUtilTest {
     @Test
     public void testGetAllowableMoves() {
@@ -23,6 +22,7 @@ public class SnakeUtilTest {
 
     @Test
     public void testBestMove() {
+
     }
 
     @Test
