@@ -81,24 +81,24 @@ public class SnakeUtilTest {
         assertEquals(6, head[1]);
     }
 
-    @Test
-    public void testGetMoveTowardsFood() {
-        String myId = "MY_ID";
-
-        MoveRequest testMoveRequest = new MoveRequest();
-        int [][] food = {{0,5}};
-        testMoveRequest.setFood(food);
-        ArrayList<Snake> snakes = new ArrayList<Snake>();
-        testMoveRequest.setSnakes(snakes);
-        testMoveRequest.setYou(myId);
-        Snake snake = new Snake();
-        snakes.add(snake);
-
-        snake.setId(myId);
-        int[][] coords = {{5,5}};
-        snake.setCoords(coords);
-
-        Move move = SnakeUtil.getMoveTowardsFood(testMoveRequest);
-        assertEquals(Move.LEFT, move);
-    }
+//    @Test
+//    public void testGetMoveTowardsFood() {
+//        String myId = "MY_ID";
+//
+//        MoveRequest testMoveRequest = new MoveRequest();
+//        int [][] food = {{0,5}};
+//        testMoveRequest.setFood(food);
+//        ArrayList<Snake> snakes = new ArrayList<Snake>();
+//        testMoveRequest.setSnakes(snakes);
+//        testMoveRequest.setYou(myId);
+//        Snake snake = new Snake();
+//        snakes.add(snake);
+//
+//        snake.setId(myId);
+//        int[][] coords = {{5,5}};
+//        snake.setCoords(coords);
+//
+////        Move move = SnakeUtil.getMoveTowardsFood(testMoveRequest);
+//        assertEquals(Move.LEFT, move);
+//    }
 }
