@@ -2,3 +2,7 @@
 .project
 .settings/
 target/
+
+xm-battlesnake-java.iml
+xm-battlesnake-java.ipr
+xm-battlesnake-java.iws

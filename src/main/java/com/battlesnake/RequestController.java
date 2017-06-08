@@ -16,15 +16,19 @@
 
 package com.battlesnake;
 
-import com.battlesnake.data.*;
-
-import org.springframework.web.bind.annotation.RestController;
+import java.util.HashMap;
+import java.util.Map;
+import com.battlesnake.data.HeadType;
+import com.battlesnake.data.Move;
+import com.battlesnake.data.MoveRequest;
+import com.battlesnake.data.MoveResponse;
+import com.battlesnake.data.StartRequest;
+import com.battlesnake.data.StartResponse;
+import com.battlesnake.data.TailType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RequestController {
@@ -42,6 +46,16 @@ public class RequestController {
 
   @RequestMapping(value="/move", method=RequestMethod.POST, produces = "application/json")
   public MoveResponse move(@RequestBody MoveRequest request) {
+
+    request.getDeadSnakes();
+    request.getFood();
+    request.getHeight();
+    request.getWidth();
+    request.getSnakes();
+    request.getTurn();
+    request.getYou();
+    request.getGameId();
+
     return new MoveResponse()
       .setMove(Move.DOWN)
       .setTaunt("Going Down!");
