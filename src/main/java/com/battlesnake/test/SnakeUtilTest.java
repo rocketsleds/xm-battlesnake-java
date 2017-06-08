@@ -58,8 +58,6 @@ public class SnakeUtilTest {
         assertTrue(moves.contains(Move.LEFT));
         assertTrue(moves.contains(Move.RIGHT));
         // assertTrue(moves.contains(Move.DOWN));
-
-
     }
 
 
@@ -81,5 +79,26 @@ public class SnakeUtilTest {
         int [] head = SnakeUtil.getMyHead(testMoveRequest);
         assertEquals(5, head[0]);
         assertEquals(6, head[1]);
+    }
+
+    @Test
+    public void testGetMoveTowardsFood() {
+        String myId = "MY_ID";
+
+        MoveRequest testMoveRequest = new MoveRequest();
+        int [][] food = {{0,5}};
+        testMoveRequest.setFood(food);
+        ArrayList<Snake> snakes = new ArrayList<Snake>();
+        testMoveRequest.setSnakes(snakes);
+        testMoveRequest.setYou(myId);
+        Snake snake = new Snake();
+        snakes.add(snake);
+
+        snake.setId(myId);
+        int[][] coords = {{5,5}};
+        snake.setCoords(coords);
+
+        Move move = SnakeUtil.getMoveTowardsFood(testMoveRequest);
+        assertEquals(Move.LEFT, move);
     }
 }
