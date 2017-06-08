@@ -90,13 +90,13 @@ public class SnakeUtil {
         int diffx = foodPellet[0] - me[0];
         int diffy = foodPellet[1] - me[1];
         if (Math.abs(diffx) >= Math.abs(diffy)) {
-            if (diffx >= 0) {
+            if (diffx < 0) {
                 return Move.RIGHT;
             } else {
                 return Move.LEFT;
             }
         } else {
-            if (diffy >= 0) {
+            if (diffy < 0) {
                 return Move.DOWN;
             } else {
                 return Move.UP;
