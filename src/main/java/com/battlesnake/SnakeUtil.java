@@ -51,7 +51,7 @@ public class SnakeUtil {
 
         }
 
-        throw new RuntimeException();
+        return currentMove;
     }
 
     public static boolean willCollideInWall(Move direction, int width, int height, Snake mySnake) {
